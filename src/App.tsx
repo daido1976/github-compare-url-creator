@@ -1,55 +1,49 @@
 import "./styles.css";
-import { useState } from "react";
+import React, { useState } from "react";
 
 export const App = () => {
-  const [org, setOrg] = useState("");
-  const [repo, setRepo] = useState("");
-  const [startCommit, setStartCommit] = useState("");
-  const [endCommit, setEndCommit] = useState("");
+  const useTextField = () => {
+    const [value, setValue] = useState("");
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(e.target.value);
+    };
+
+    return {
+      type: "text",
+      value,
+      onChange,
+    };
+  };
+
+  const org = useTextField();
+  const repo = useTextField();
+  const startCommit = useTextField();
+  const endCommit = useTextField();
+
   const compareUrl = () => {
-    return `https://github.com/${org}/${repo}/compare/${startCommit}...${endCommit}`;
+    return `https://github.com/${org.value}/${repo.value}/compare/${startCommit.value}...${endCommit.value}`;
   };
 
   return (
     <div>
       <label>
         Organization/User:&nbsp;
-        <input
-          type="text"
-          name="org"
-          onChange={(e) => setOrg(e.target.value)}
-          value={org}
-        />
+        <input {...org} />
       </label>
       <br />
       <label>
         Repository:&nbsp;
-        <input
-          type="text"
-          name="repo"
-          onChange={(e) => setRepo(e.target.value)}
-          value={repo}
-        />
+        <input {...repo} />
       </label>
       <br />
       <label>
         StartCommit:&nbsp;
-        <input
-          type="text"
-          name="startCommit"
-          onChange={(e) => setStartCommit(e.target.value)}
-          value={startCommit}
-        />
+        <input {...startCommit} />
       </label>
       <br />
       <label>
         EndCommit:&nbsp;
-        <input
-          type="text"
-          name="endCommit"
-          onChange={(e) => setEndCommit(e.target.value)}
-          value={endCommit}
-        />
+        <input {...endCommit} />
       </label>
       <br />
       <div>
