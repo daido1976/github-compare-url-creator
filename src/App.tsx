@@ -20,9 +20,7 @@ export const App = () => {
   const startCommit = useTextField();
   const endCommit = useTextField();
 
-  const compareUrl = () => {
-    return `https://github.com/${org.value}/${repo.value}/compare/${startCommit.value}...${endCommit.value}`;
-  };
+  const compareUrl = `https://github.com/${org.value}/${repo.value}/compare/${startCommit.value}...${endCommit.value}`;
 
   return (
     <div>
@@ -47,8 +45,8 @@ export const App = () => {
       </label>
       <br />
       <div>
-        <a href={compareUrl()} target="_blank" rel="noopener noreferrer">
-          {compareUrl()}
+        <a href={compareUrl} target="_blank" rel="noopener noreferrer">
+          {compareUrl}
         </a>
       </div>
     </div>
