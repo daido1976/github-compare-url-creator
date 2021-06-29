@@ -3,7 +3,7 @@ import githubLogo from "./img/github.png";
 import React, { useState } from "react";
 
 export const App = () => {
-  const useTextField = (placeholder: string) => {
+  const useTextField = (props: { placeholder: string }) => {
     const [value, setValue] = useState("");
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setValue(e.target.value);
@@ -12,15 +12,15 @@ export const App = () => {
     return {
       type: "text",
       value,
-      placeholder,
+      placeholder: props.placeholder,
       onChange,
     };
   };
 
-  const org = useTextField("org");
-  const repo = useTextField("repo");
-  const startCommit = useTextField("startCommit");
-  const endCommit = useTextField("endCommit");
+  const org = useTextField({ placeholder: "org" });
+  const repo = useTextField({ placeholder: "repo" });
+  const startCommit = useTextField({ placeholder: "startCommit" });
+  const endCommit = useTextField({ placeholder: "endCommit" });
 
   const compareUrl = `https://github.com/${org.value}/${
     repo.value
