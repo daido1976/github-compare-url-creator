@@ -2,13 +2,15 @@ import "./styles.css";
 import githubLogo from "./img/github.png";
 import React, { useState } from "react";
 
+type StorageKey = "org" | "repo" | "start" | "end";
+
 export const App = () => {
   const useTextField = ({
     placeholder,
     key,
   }: {
     placeholder: string;
-    key: string;
+    key: StorageKey;
   }) => {
     const type: "text" = "text";
     const initialValue = localStorage.getItem(key) || "";
@@ -40,11 +42,15 @@ export const App = () => {
     endTextField.value
   )}`;
 
+  const saveToStorage = (key: StorageKey, value: string) => {
+    localStorage.setItem(key, value);
+  };
+
   const onSaveClick = (_e: React.MouseEvent<HTMLButtonElement>) => {
-    localStorage.setItem("org", orgTextField.value);
-    localStorage.setItem("repo", repoTextField.value);
-    localStorage.setItem("start", startTextField.value);
-    localStorage.setItem("end", endTextField.value);
+    saveToStorage("org", orgTextField.value);
+    saveToStorage("repo", repoTextField.value);
+    saveToStorage("start", startTextField.value);
+    saveToStorage("end", endTextField.value);
   };
 
   return (
