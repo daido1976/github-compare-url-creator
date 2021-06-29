@@ -4,48 +4,51 @@ import React, { useState } from "react";
 
 export const App = () => {
   const useTextField = (props: { placeholder: string }) => {
+    const type: "text" = "text";
     const [value, setValue] = useState("");
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setValue(e.target.value);
     };
 
     return {
-      type: "text",
+      type,
       value,
       placeholder: props.placeholder,
       onChange,
     };
   };
+  const truncateCharsFrom = (text: string) => {
+    return text.substr(0, 10);
+  };
 
-  const org = useTextField({ placeholder: "org" });
-  const repo = useTextField({ placeholder: "repo" });
-  const startCommit = useTextField({ placeholder: "startCommit" });
-  const endCommit = useTextField({ placeholder: "endCommit" });
+  const orgTextField = useTextField({ placeholder: "org" });
+  const repoTextField = useTextField({ placeholder: "repo" });
+  const startTextField = useTextField({ placeholder: "start" });
+  const endTextField = useTextField({ placeholder: "end" });
 
-  const compareUrl = `https://github.com/${org.value}/${
-    repo.value
-  }/compare/${startCommit.value.substr(0, 10)}...${endCommit.value.substr(
-    0,
-    10
+  const compareUrl = `https://github.com/${orgTextField.value}/${
+    repoTextField.value
+  }/compare/${truncateCharsFrom(startTextField.value)}...${truncateCharsFrom(
+    endTextField.value
   )}`;
 
   return (
     <div className="container">
       <h2>GitHub Compare URL Creator</h2>
       <label>
-        <input {...org} />
+        <input {...orgTextField} />
       </label>
       <br />
       <label>
-        <input {...repo} />
+        <input {...repoTextField} />
       </label>
       <br />
       <label>
-        <input {...startCommit} />
+        <input {...startTextField} />
       </label>
       <br />
       <label>
-        <input {...endCommit} />
+        <input {...endTextField} />
       </label>
       <br />
       <div>
