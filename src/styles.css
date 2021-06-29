@@ -19,6 +19,10 @@ input::placeholder {
   color: #bccde5;
 }
 
+.button-wrapper {
+  margin-bottom: 5px;
+}
+
 .github-logo {
   margin-right: 3px;
   width: 22px;
