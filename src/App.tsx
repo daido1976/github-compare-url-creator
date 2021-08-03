@@ -58,7 +58,6 @@ export const App = () => {
     <div className="container">
       <h2>
         <a
-          className="url-title"
           href="https://github.com/daido1976/github-compare-url-creator"
           target="_blank"
           rel="noopener noreferrer"

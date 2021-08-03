@@ -53,11 +53,6 @@ input::placeholder {
   vertical-align: sub;
 }
 
-.url-title {
-  text-decoration: none;
-  color: #000000;
-}
-
 .url {
   text-decoration: none;
   color: #3e82be;
