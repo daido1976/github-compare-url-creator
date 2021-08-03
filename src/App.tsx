@@ -55,7 +55,16 @@ export const App = () => {
 
   return (
     <div className="container">
-      <h2>GitHub Compare URL Creator</h2>
+      <h2>
+        <a
+          className="url-title"
+          href="https://github.com/daido1976/github-compare-url-creator"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub Compare URL Creator
+        </a>
+      </h2>
       <label>
         <input {...orgTextField} />
       </label>
