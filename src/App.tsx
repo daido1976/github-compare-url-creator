@@ -3,7 +3,7 @@ import githubLogo from "./img/github.png";
 import octocatLogo from "./img/octocat.png";
 import React, { useState } from "react";
 
-type StorageKey = "org" | "repo" | "start" | "end";
+type StorageKey = "org" | "repo" | "start" | "end" | "bookmarkOrgs";
 
 export const App = () => {
   const useTextField = ({
@@ -12,7 +12,15 @@ export const App = () => {
   }: {
     placeholder: string;
     key: StorageKey;
-  }) => {
+  }): [
+    {
+      type: "text";
+      value: string;
+      placeholder: string;
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    },
+    React.Dispatch<React.SetStateAction<string>>
+  ] => {
     const type: "text" = "text";
     const initialValue = localStorage.getItem(key) || "";
     const [value, setValue] = useState(initialValue);
@@ -20,22 +28,44 @@ export const App = () => {
       setValue(e.target.value);
     };
 
-    return {
-      type,
-      value,
-      placeholder,
-      onChange,
-    };
+    return [
+      {
+        type,
+        value,
+        placeholder,
+        onChange,
+      },
+      setValue,
+    ];
   };
+
+  const initialBookmarkOrgs =
+    localStorage.getItem("bookmarkOrgs")?.split(",") || [];
+  const initialBookmarkRepos =
+    localStorage.getItem("bookmarkRepos")?.split(",") || [];
+  const [bookmarkOrgs, setBookmarkOrgs] = useState(initialBookmarkOrgs);
+  const [bookmarkRepos, setBookmarkRepos] = useState(initialBookmarkRepos);
 
   const truncateCharsFrom = (text: string) => {
     return text.substr(0, 10);
   };
 
-  const orgTextField = useTextField({ placeholder: "org", key: "org" });
-  const repoTextField = useTextField({ placeholder: "repo", key: "repo" });
-  const startTextField = useTextField({ placeholder: "start", key: "start" });
-  const endTextField = useTextField({ placeholder: "end", key: "end" });
+  const [orgTextField, setOrg] = useTextField({
+    placeholder: "org",
+    key: "org",
+  });
+  const [repoTextField, setRepo] = useTextField({
+    placeholder: "repo",
+    key: "repo",
+  });
+  const [startTextField] = useTextField({
+    placeholder: "start",
+    key: "start",
+  });
+  const [endTextField] = useTextField({
+    placeholder: "end",
+    key: "end",
+  });
 
   const compareUrl = `https://github.com/${orgTextField.value}/${
     repoTextField.value
@@ -67,7 +97,16 @@ export const App = () => {
         GitHub Compare URL Creator
       </h2>
       <label>
-        <input {...orgTextField} />
+        <input {...orgTextField} />{" "}
+        <button
+          onClick={(_e) => {
+            const newBookmarkOrgs = [orgTextField.value, ...bookmarkOrgs];
+            setBookmarkOrgs(newBookmarkOrgs);
+            saveToStorage("bookmarkOrgs", newBookmarkOrgs.toString());
+          }}
+        >
+          💾
+        </button>
       </label>
       <br />
       <label>
@@ -97,6 +136,28 @@ export const App = () => {
         >
           {compareUrl}
         </a>
+      </div>
+      <br />
+      <div>
+        orgs:{" "}
+        {bookmarkOrgs.map((v, i) => {
+          return (
+            <button key={i} onClick={(_e) => setOrg(v)}>
+              {v + " "}
+            </button>
+          );
+        })}
+      </div>
+      <br />
+      <div>
+        repos:{" "}
+        {bookmarkRepos.map((v, i) => {
+          return (
+            <button key={i} onClick={(_e) => setRepo(v)}>
+              {v + " "}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
