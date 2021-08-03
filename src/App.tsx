@@ -56,7 +56,7 @@ export const App = () => {
 
   return (
     <div className="container">
-      <h2>
+      <h2 className="title">
         <a
           href="https://github.com/daido1976/github-compare-url-creator"
           target="_blank"
