@@ -82,7 +82,9 @@ export const App = () => {
       </label>
       <br />
       <div className="button-wrapper">
-        <button onClick={onSaveClick}>save</button>
+        <button className="button-save" onClick={onSaveClick}>
+          save
+        </button>
       </div>
       <div>
         <img className="github-logo" src={githubLogo} alt="github-logo" />
