@@ -43,8 +43,13 @@ input::placeholder {
 }
 
 .github-logo {
-  margin-right: 3px;
-  width: 22px;
+  margin-right: 5px;
+  vertical-align: sub;
+}
+
+.octocat-logo {
+  margin-right: 1px;
+  width: 30px;
   vertical-align: sub;
 }
 

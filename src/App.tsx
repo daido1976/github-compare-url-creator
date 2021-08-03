@@ -1,5 +1,6 @@
 import "./styles.css";
 import githubLogo from "./img/github.png";
+import octocatLogo from "./img/octocat.png";
 import React, { useState } from "react";
 
 type StorageKey = "org" | "repo" | "start" | "end";
@@ -62,8 +63,9 @@ export const App = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          GitHub Compare URL Creator
+          <img className="github-logo" src={githubLogo} alt="github-logo" />
         </a>
+        GitHub Compare URL Creator
       </h2>
       <label>
         <input {...orgTextField} />
@@ -87,7 +89,7 @@ export const App = () => {
         </button>
       </div>
       <div>
-        <img className="github-logo" src={githubLogo} alt="github-logo" />
+        <img className="octocat-logo" src={octocatLogo} alt="octocat-logo" />
         <a
           className="url"
           href={compareUrl}
