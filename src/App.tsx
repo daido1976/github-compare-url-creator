@@ -1,9 +1,15 @@
 import "./styles.css";
 import githubLogo from "./img/github.png";
 import octocatLogo from "./img/octocat.png";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
-type StorageKey = "org" | "repo" | "start" | "end" | "bookmarkOrgs";
+type StorageKey =
+  | "org"
+  | "repo"
+  | "start"
+  | "end"
+  | "bookmarkOrgs"
+  | "bookmarkRepos";
 
 export const App = () => {
   const useTextField = ({
@@ -39,12 +45,27 @@ export const App = () => {
     ];
   };
 
-  const initialBookmarkOrgs =
-    localStorage.getItem("bookmarkOrgs")?.split(",") || [];
-  const initialBookmarkRepos =
-    localStorage.getItem("bookmarkRepos")?.split(",") || [];
-  const [bookmarkOrgs, setBookmarkOrgs] = useState(initialBookmarkOrgs);
-  const [bookmarkRepos, setBookmarkRepos] = useState(initialBookmarkRepos);
+  const useBookmarks = (key: StorageKey): [string[], (v: string) => void] => {
+    const initialState = localStorage.getItem(key)?.split(",") || [];
+    const [bookmarks, setBookmarks] = useState(initialState);
+
+    const addBookmarks = useCallback(
+      (v: string) => {
+        if (bookmarks.includes(v)) {
+          return;
+        }
+        const newBookmarks = [v, ...bookmarks];
+        setBookmarks(newBookmarks);
+        saveToStorage(key, newBookmarks.toString());
+      },
+      [bookmarks]
+    );
+
+    return [bookmarks, addBookmarks];
+  };
+
+  const [bookmarkOrgs, addBookmarkOrgs] = useBookmarks("bookmarkOrgs");
+  const [bookmarkRepos, addBookmarkRepos] = useBookmarks("bookmarkRepos");
 
   const truncateCharsFrom = (text: string) => {
     return text.substr(0, 10);
@@ -98,19 +119,16 @@ export const App = () => {
       </h2>
       <label>
         <input {...orgTextField} />{" "}
-        <button
-          onClick={(_e) => {
-            const newBookmarkOrgs = [orgTextField.value, ...bookmarkOrgs];
-            setBookmarkOrgs(newBookmarkOrgs);
-            saveToStorage("bookmarkOrgs", newBookmarkOrgs.toString());
-          }}
-        >
+        <button onClick={(_e) => addBookmarkOrgs(orgTextField.value)}>
           💾
         </button>
       </label>
       <br />
       <label>
-        <input {...repoTextField} />
+        <input {...repoTextField} />{" "}
+        <button onClick={(_e) => addBookmarkRepos(repoTextField.value)}>
+          💾
+        </button>
       </label>
       <br />
       <label>
