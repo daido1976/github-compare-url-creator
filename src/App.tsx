@@ -45,7 +45,9 @@ export const App = () => {
     ];
   };
 
-  const useBookmarks = (key: StorageKey): [string[], (v: string) => void] => {
+  const useBookmarks = (
+    key: StorageKey
+  ): [string[], (v: string) => void, (v: string) => void] => {
     const initialState = localStorage.getItem(key)?.split(",") || [];
     const [bookmarks, setBookmarks] = useState(initialState);
 
@@ -61,10 +63,20 @@ export const App = () => {
       [bookmarks]
     );
 
-    return [bookmarks, addBookmarks];
+    const removeBookmarks = useCallback(
+      (v: string) => {
+        const newBookmarks = bookmarks.filter((b) => b !== v);
+        setBookmarks(newBookmarks);
+        saveToStorage(key, newBookmarks.toString());
+      },
+      [bookmarks]
+    );
+
+    return [bookmarks, addBookmarks, removeBookmarks];
   };
 
-  const [bookmarkOrgs, addBookmarkOrgs] = useBookmarks("bookmarkOrgs");
+  const [bookmarkOrgs, addBookmarkOrgs, removeBookmarkOrgs] =
+    useBookmarks("bookmarkOrgs");
   const [bookmarkRepos, addBookmarkRepos] = useBookmarks("bookmarkRepos");
 
   const truncateCharsFrom = (text: string) => {
@@ -160,9 +172,10 @@ export const App = () => {
         orgs:{" "}
         {bookmarkOrgs.map((v, i) => {
           return (
-            <button key={i} onClick={(_e) => setOrg(v)}>
-              {v + " "}
-            </button>
+            <div key={i}>
+              <button onClick={(_e) => setOrg(v)}>{v + " "}</button>
+              <button onClick={(_e) => removeBookmarkOrgs(v)}>x</button>
+            </div>
           );
         })}
       </div>
