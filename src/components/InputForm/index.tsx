@@ -1,5 +1,5 @@
 import styles from "./index.module.css";
-import { TextField } from "../../App";
+import { TextField } from "../../hooks/useTextField";
 
 type Props = {
   orgTextField: TextField;

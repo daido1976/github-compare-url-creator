@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { StorageKey, fetchFromStorage, saveToStorage } from "./storage";
+import { useTextField } from "./hooks";
 import {
   Header,
   CompareUrl,
@@ -9,39 +10,7 @@ import {
   Layout,
 } from "./components";
 
-export type TextField = {
-  type: "text";
-  value: string;
-  placeholder: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
-
 export const App = () => {
-  const useTextField = ({
-    placeholder,
-    key,
-  }: {
-    placeholder: string;
-    key: StorageKey;
-  }): [TextField, React.Dispatch<React.SetStateAction<string>>] => {
-    const type: "text" = "text";
-    const initialValue = fetchFromStorage(key);
-    const [value, setValue] = useState(initialValue);
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setValue(e.target.value);
-    };
-
-    return [
-      {
-        type,
-        value,
-        placeholder,
-        onChange,
-      },
-      setValue,
-    ];
-  };
-
   const useBookmarks = (
     key: StorageKey
   ): [string[], (v: string) => void, (v: string) => void] => {
