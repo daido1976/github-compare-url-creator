@@ -3,6 +3,7 @@ import React, { useState, useCallback } from "react";
 import { Header } from "./components/Header";
 import { CompareUrl } from "./components/CompareUrl";
 import { InputForm } from "./components/InputForm";
+import { SaveButton } from "./components/SaveButton";
 
 type StorageKey =
   | "org"
@@ -128,11 +129,7 @@ export const App = () => {
         addBookmarkOrgs={addBookmarkOrgs}
         addBookmarkRepos={addBookmarkRepos}
       />
-      <div className="button-wrapper">
-        <button className="button-save" onClick={onSaveClick}>
-          save
-        </button>
-      </div>
+      <SaveButton onSaveClick={onSaveClick} />
       <CompareUrl compareUrl={compareUrl} />
       <br />
       <div>
