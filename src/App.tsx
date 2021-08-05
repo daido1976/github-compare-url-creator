@@ -2,6 +2,7 @@ import "./styles.css";
 import React, { useState, useCallback } from "react";
 import { Header } from "./components/Header";
 import { CompareUrl } from "./components/CompareUrl";
+import { InputForm } from "./components/InputForm";
 
 type StorageKey =
   | "org"
@@ -11,6 +12,13 @@ type StorageKey =
   | "bookmarkOrgs"
   | "bookmarkRepos";
 
+export type TextField = {
+  type: "text";
+  value: string;
+  placeholder: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
 export const App = () => {
   const useTextField = ({
     placeholder,
@@ -18,15 +26,7 @@ export const App = () => {
   }: {
     placeholder: string;
     key: StorageKey;
-  }): [
-    {
-      type: "text";
-      value: string;
-      placeholder: string;
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    },
-    React.Dispatch<React.SetStateAction<string>>
-  ] => {
+  }): [TextField, React.Dispatch<React.SetStateAction<string>>] => {
     const type: "text" = "text";
     const initialValue = localStorage.getItem(key) || "";
     const [value, setValue] = useState(initialValue);
@@ -120,28 +120,14 @@ export const App = () => {
   return (
     <div className="container">
       <Header />
-      <label>
-        <input {...orgTextField} />{" "}
-        <button onClick={(_e) => addBookmarkOrgs(orgTextField.value)}>
-          💾
-        </button>
-      </label>
-      <br />
-      <label>
-        <input {...repoTextField} />{" "}
-        <button onClick={(_e) => addBookmarkRepos(repoTextField.value)}>
-          💾
-        </button>
-      </label>
-      <br />
-      <label>
-        <input {...startTextField} />
-      </label>
-      <br />
-      <label>
-        <input {...endTextField} />
-      </label>
-      <br />
+      <InputForm
+        orgTextField={orgTextField}
+        repoTextField={repoTextField}
+        startTextField={startTextField}
+        endTextField={endTextField}
+        addBookmarkOrgs={addBookmarkOrgs}
+        addBookmarkRepos={addBookmarkRepos}
+      />
       <div className="button-wrapper">
         <button className="button-save" onClick={onSaveClick}>
           save
