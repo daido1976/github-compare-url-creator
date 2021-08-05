@@ -1,7 +1,7 @@
 import "./styles.css";
-import octocatLogo from "./img/octocat.png";
 import React, { useState, useCallback } from "react";
 import { Header } from "./components/Header";
+import { CompareUrl } from "./components/CompareUrl";
 
 type StorageKey =
   | "org"
@@ -147,17 +147,7 @@ export const App = () => {
           save
         </button>
       </div>
-      <div>
-        <img className="octocat-logo" src={octocatLogo} alt="octocat-logo" />
-        <a
-          className="url"
-          href={compareUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {compareUrl}
-        </a>
-      </div>
+      <CompareUrl compareUrl={compareUrl} />
       <br />
       <div>
         orgs:{" "}

@@ -41,15 +41,3 @@ input::placeholder {
 .button-save:active {
   background-color: #c8cbd1;
 }
-
-.octocat-logo {
-  margin-right: 1px;
-  width: 28px;
-  vertical-align: sub;
-}
-
-.url {
-  text-decoration: none;
-  color: #3e82be;
-  font-weight: bold;
-}
