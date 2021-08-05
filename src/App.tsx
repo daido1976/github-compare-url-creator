@@ -1,9 +1,10 @@
-import "./styles.css";
 import React, { useState, useCallback } from "react";
 import { Header } from "./components/Header";
 import { CompareUrl } from "./components/CompareUrl";
 import { InputForm } from "./components/InputForm";
 import { SaveButton } from "./components/SaveButton";
+import { Bookmark } from "./components/Bookmark";
+import { Layout } from "./components/Layout";
 
 type StorageKey =
   | "org"
@@ -78,7 +79,8 @@ export const App = () => {
 
   const [bookmarkOrgs, addBookmarkOrgs, removeBookmarkOrgs] =
     useBookmarks("bookmarkOrgs");
-  const [bookmarkRepos, addBookmarkRepos] = useBookmarks("bookmarkRepos");
+  const [bookmarkRepos, addBookmarkRepos, removeBookmarkRepos] =
+    useBookmarks("bookmarkRepos");
 
   const truncateCharsFrom = (text: string) => {
     return text.substr(0, 10);
@@ -119,41 +121,28 @@ export const App = () => {
   };
 
   return (
-    <div className="container">
-      <Header />
-      <InputForm
-        orgTextField={orgTextField}
-        repoTextField={repoTextField}
-        startTextField={startTextField}
-        endTextField={endTextField}
-        addBookmarkOrgs={addBookmarkOrgs}
-        addBookmarkRepos={addBookmarkRepos}
-      />
-      <SaveButton onSaveClick={onSaveClick} />
-      <CompareUrl compareUrl={compareUrl} />
-      <br />
-      <div>
-        orgs:{" "}
-        {bookmarkOrgs.map((v, i) => {
-          return (
-            <div key={i}>
-              <button onClick={(_e) => setOrg(v)}>{v + " "}</button>
-              <button onClick={(_e) => removeBookmarkOrgs(v)}>x</button>
-            </div>
-          );
-        })}
-      </div>
-      <br />
-      <div>
-        repos:{" "}
-        {bookmarkRepos.map((v, i) => {
-          return (
-            <button key={i} onClick={(_e) => setRepo(v)}>
-              {v + " "}
-            </button>
-          );
-        })}
-      </div>
+    <div>
+      <Layout>
+        <Header />
+        <InputForm
+          orgTextField={orgTextField}
+          repoTextField={repoTextField}
+          startTextField={startTextField}
+          endTextField={endTextField}
+          addBookmarkOrgs={addBookmarkOrgs}
+          addBookmarkRepos={addBookmarkRepos}
+        />
+        <SaveButton onSaveClick={onSaveClick} />
+        <CompareUrl compareUrl={compareUrl} />
+        <Bookmark
+          bookmarkOrgs={bookmarkOrgs}
+          bookmarkRepos={bookmarkRepos}
+          setOrg={setOrg}
+          setRepo={setRepo}
+          removeBookmarkOrgs={removeBookmarkOrgs}
+          removeBookmarkRepos={removeBookmarkRepos}
+        />
+      </Layout>
     </div>
   );
 };
