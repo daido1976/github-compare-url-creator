@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from "react";
-import { StorageKey, fetchFromStorage, saveToStorage } from "./storage";
-import { useTextField } from "./hooks";
+import React from "react";
+import { saveToStorage } from "./storage";
+import { useTextField, useBookmarks } from "./hooks";
 import {
   Header,
   CompareUrl,
@@ -11,36 +11,6 @@ import {
 } from "./components";
 
 export const App = () => {
-  const useBookmarks = (
-    key: StorageKey
-  ): [string[], (v: string) => void, (v: string) => void] => {
-    const initialState = fetchFromStorage(key).split(",") || [];
-    const [bookmarks, setBookmarks] = useState(initialState);
-
-    const addBookmarks = useCallback(
-      (v: string) => {
-        if (bookmarks.includes(v)) {
-          return;
-        }
-        const newBookmarks = [v, ...bookmarks];
-        setBookmarks(newBookmarks);
-        saveToStorage(key, newBookmarks.toString());
-      },
-      [bookmarks]
-    );
-
-    const removeBookmarks = useCallback(
-      (v: string) => {
-        const newBookmarks = bookmarks.filter((b) => b !== v);
-        setBookmarks(newBookmarks);
-        saveToStorage(key, newBookmarks.toString());
-      },
-      [bookmarks]
-    );
-
-    return [bookmarks, addBookmarks, removeBookmarks];
-  };
-
   const [bookmarkOrgs, addBookmarkOrgs, removeBookmarkOrgs] =
     useBookmarks("bookmarkOrgs");
   const [bookmarkRepos, addBookmarkRepos, removeBookmarkRepos] =
