@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import { StorageKey, fetchFromStorage, saveToStorage } from "./storage";
 import {
   Header,
   CompareUrl,
@@ -7,14 +8,6 @@ import {
   Bookmark,
   Layout,
 } from "./components";
-
-type StorageKey =
-  | "org"
-  | "repo"
-  | "start"
-  | "end"
-  | "bookmarkOrgs"
-  | "bookmarkRepos";
 
 export type TextField = {
   type: "text";
@@ -32,7 +25,7 @@ export const App = () => {
     key: StorageKey;
   }): [TextField, React.Dispatch<React.SetStateAction<string>>] => {
     const type: "text" = "text";
-    const initialValue = localStorage.getItem(key) || "";
+    const initialValue = fetchFromStorage(key);
     const [value, setValue] = useState(initialValue);
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setValue(e.target.value);
@@ -52,7 +45,7 @@ export const App = () => {
   const useBookmarks = (
     key: StorageKey
   ): [string[], (v: string) => void, (v: string) => void] => {
-    const initialState = localStorage.getItem(key)?.split(",") || [];
+    const initialState = fetchFromStorage(key).split(",") || [];
     const [bookmarks, setBookmarks] = useState(initialState);
 
     const addBookmarks = useCallback(
@@ -110,10 +103,6 @@ export const App = () => {
   }/compare/${truncateCharsFrom(startTextField.value)}...${truncateCharsFrom(
     endTextField.value
   )}`;
-
-  const saveToStorage = (key: StorageKey, value: string) => {
-    localStorage.setItem(key, value);
-  };
 
   const onSaveClick = (_e: React.MouseEvent<HTMLButtonElement>) => {
     saveToStorage("org", orgTextField.value);
