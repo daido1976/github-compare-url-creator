@@ -1,7 +1,7 @@
 import "./styles.css";
-import githubLogo from "./img/github.png";
 import octocatLogo from "./img/octocat.png";
 import React, { useState, useCallback } from "react";
+import { Header } from "./components/Header";
 
 type StorageKey =
   | "org"
@@ -119,16 +119,7 @@ export const App = () => {
 
   return (
     <div className="container">
-      <h2 className="title">
-        <a
-          href="https://github.com/daido1976/github-compare-url-creator"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img className="github-logo" src={githubLogo} alt="github-logo" />
-        </a>
-        GitHub Compare URL Creator
-      </h2>
+      <Header />
       <label>
         <input {...orgTextField} />{" "}
         <button onClick={(_e) => addBookmarkOrgs(orgTextField.value)}>

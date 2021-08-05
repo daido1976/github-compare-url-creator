@@ -5,10 +5,6 @@
   font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif;
 }
 
-.title {
-  font-size: 1.4rem;
-}
-
 input {
   font-size: 100%;
   line-height: 1.2em;
@@ -44,12 +40,6 @@ input::placeholder {
 
 .button-save:active {
   background-color: #c8cbd1;
-}
-
-.github-logo {
-  margin-right: 5px;
-  width: 30px;
-  vertical-align: sub;
 }
 
 .octocat-logo {
