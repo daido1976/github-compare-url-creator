@@ -1,6 +1,7 @@
 import React from "react";
 import { saveToStorage } from "./storage";
 import { useTextField, useBookmarks } from "./hooks";
+import { truncateCharsFrom } from "./utils";
 import {
   Header,
   CompareUrl,
@@ -11,14 +12,16 @@ import {
 } from "./components";
 
 export const App = () => {
-  const [bookmarkOrgs, addBookmarkOrgs, removeBookmarkOrgs] =
-    useBookmarks("bookmarkOrgs");
-  const [bookmarkRepos, addBookmarkRepos, removeBookmarkRepos] =
-    useBookmarks("bookmarkRepos");
-
-  const truncateCharsFrom = (text: string) => {
-    return text.substr(0, 10);
-  };
+  const {
+    bookmarks: bookmarkOrgs,
+    addBookmarks: addBookmarkOrgs,
+    removeBookmarks: removeBookmarkOrgs,
+  } = useBookmarks("bookmarkOrgs");
+  const {
+    bookmarks: bookmarkRepos,
+    addBookmarks: addBookmarkRepos,
+    removeBookmarks: removeBookmarkRepos,
+  } = useBookmarks("bookmarkRepos");
 
   const [orgTextField, setOrg] = useTextField({
     placeholder: "org",

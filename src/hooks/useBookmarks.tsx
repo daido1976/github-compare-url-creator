@@ -1,9 +1,7 @@
 import { useState, useCallback } from "react";
 import { StorageKey, fetchFromStorage, saveToStorage } from "../storage";
 
-export const useBookmarks = (
-  key: StorageKey
-): [string[], (v: string) => void, (v: string) => void] => {
+export const useBookmarks = (key: StorageKey) => {
   const initialState = fetchFromStorage(key).split(",") || [];
   const [bookmarks, setBookmarks] = useState(initialState);
 
@@ -28,5 +26,5 @@ export const useBookmarks = (
     [bookmarks]
   );
 
-  return [bookmarks, addBookmarks, removeBookmarks];
+  return { bookmarks, addBookmarks, removeBookmarks };
 };
