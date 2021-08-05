@@ -1,10 +1,12 @@
 import React, { useState, useCallback } from "react";
-import { Header } from "./components/Header";
-import { CompareUrl } from "./components/CompareUrl";
-import { InputForm } from "./components/InputForm";
-import { SaveButton } from "./components/SaveButton";
-import { Bookmark } from "./components/Bookmark";
-import { Layout } from "./components/Layout";
+import {
+  Header,
+  CompareUrl,
+  InputForm,
+  SaveButton,
+  Bookmark,
+  Layout,
+} from "./components";
 
 type StorageKey =
   | "org"
