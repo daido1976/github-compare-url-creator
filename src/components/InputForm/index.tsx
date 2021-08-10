@@ -6,8 +6,18 @@ type Props = {
   repoTextField: TextField;
   startTextField: TextField;
   endTextField: TextField;
-  addBookmarkOrgs: (v: string) => void;
-  addBookmarkRepos: (v: string) => void;
+  orgBookmarkComponent: JSX.Element;
+  orgBookmarkOpen: boolean;
+  toggleOrgBookmark: React.Dispatch<React.SetStateAction<boolean>>;
+  repoBookmarkComponent: JSX.Element;
+  repoBookmarkOpen: boolean;
+  toggleRepoBookmark: React.Dispatch<React.SetStateAction<boolean>>;
+  startBookmarkComponent: JSX.Element;
+  startBookmarkOpen: boolean;
+  toggleStartBookmark: React.Dispatch<React.SetStateAction<boolean>>;
+  endBookmarkComponent: JSX.Element;
+  endBookmarkOpen: boolean;
+  toggleEndBookmark: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const InputForm: React.FC<Props> = ({
@@ -15,33 +25,89 @@ export const InputForm: React.FC<Props> = ({
   repoTextField,
   startTextField,
   endTextField,
-  addBookmarkOrgs,
-  addBookmarkRepos,
+  orgBookmarkComponent,
+  orgBookmarkOpen,
+  toggleOrgBookmark,
+  repoBookmarkComponent,
+  repoBookmarkOpen,
+  toggleRepoBookmark,
+  startBookmarkComponent,
+  startBookmarkOpen,
+  toggleStartBookmark,
+  endBookmarkComponent,
+  endBookmarkOpen,
+  toggleEndBookmark,
 }) => {
   return (
     <div>
-      <label>
-        <input className={styles.inputForm} {...orgTextField} />{" "}
-        <button onClick={(_e) => addBookmarkOrgs(orgTextField.value)}>
-          💾
-        </button>
-      </label>
-      <br />
-      <label>
-        <input className={styles.inputForm} {...repoTextField} />{" "}
-        <button onClick={(_e) => addBookmarkRepos(repoTextField.value)}>
-          💾
-        </button>
-      </label>
-      <br />
-      <label>
-        <input className={styles.inputForm} {...startTextField} />
-      </label>
-      <br />
-      <label>
-        <input className={styles.inputForm} {...endTextField} />
-      </label>
-      <br />
+      <div className={styles.inputFormWrapper}>
+        <label>
+          <input
+            className={styles.inputForm}
+            {...orgTextField}
+            onClick={(_e) => {
+              if (!orgBookmarkOpen) {
+                toggleRepoBookmark(false);
+                toggleStartBookmark(false);
+                toggleEndBookmark(false);
+              }
+              toggleOrgBookmark(!orgBookmarkOpen);
+            }}
+          />{" "}
+        </label>
+        {orgBookmarkOpen ? orgBookmarkComponent : null}
+      </div>
+      <div className={styles.inputFormWrapper}>
+        <label>
+          <input
+            className={styles.inputForm}
+            {...repoTextField}
+            onClick={(_e) => {
+              if (!repoBookmarkOpen) {
+                toggleOrgBookmark(false);
+                toggleStartBookmark(false);
+                toggleEndBookmark(false);
+              }
+              toggleRepoBookmark(!repoBookmarkOpen);
+            }}
+          />{" "}
+        </label>
+        {repoBookmarkOpen ? repoBookmarkComponent : null}
+      </div>
+      <div className={styles.inputFormWrapper}>
+        <label>
+          <input
+            className={styles.inputForm}
+            {...startTextField}
+            onClick={(_e) => {
+              if (!startBookmarkOpen) {
+                toggleOrgBookmark(false);
+                toggleRepoBookmark(false);
+                toggleEndBookmark(false);
+              }
+              toggleStartBookmark(!startBookmarkOpen);
+            }}
+          />{" "}
+        </label>
+        {startBookmarkOpen ? startBookmarkComponent : null}
+      </div>
+      <div className={styles.inputFormWrapper}>
+        <label>
+          <input
+            className={styles.inputForm}
+            {...endTextField}
+            onClick={(_e) => {
+              if (!endBookmarkOpen) {
+                toggleOrgBookmark(false);
+                toggleRepoBookmark(false);
+                toggleStartBookmark(false);
+              }
+              toggleEndBookmark(!endBookmarkOpen);
+            }}
+          />{" "}
+        </label>
+        {endBookmarkOpen ? endBookmarkComponent : null}
+      </div>
     </div>
   );
 };

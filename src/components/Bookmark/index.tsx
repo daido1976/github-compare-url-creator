@@ -1,54 +1,50 @@
 import styles from "./index.module.css";
 
 type Props = {
-  bookmarkOrgs: string[];
-  bookmarkRepos: string[];
-  setOrg: (value: React.SetStateAction<string>) => void;
-  setRepo: (value: React.SetStateAction<string>) => void;
-  removeBookmarkOrgs: (v: string) => void;
-  removeBookmarkRepos: (v: string) => void;
+  bookmarkValues: string[];
+  setValue: (value: React.SetStateAction<string>) => void;
+  removeBookmarkValues: (v: string) => void;
+  toggleBookmark: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const Bookmark: React.FC<Props> = ({
-  bookmarkOrgs,
-  bookmarkRepos,
-  setOrg,
-  setRepo,
-  removeBookmarkOrgs,
-  removeBookmarkRepos,
+  bookmarkValues,
+  setValue,
+  removeBookmarkValues,
+  toggleBookmark,
 }) => {
   return (
     <div>
-      <div>
-        orgs:{" "}
-        {bookmarkOrgs.map((v, i) => {
-          if (!v) {
-            return;
-          }
+      {bookmarkValues.length > 1 ? (
+        // FIXME: ↑ は空文字が配列に入っているためにこうしているので、配列に空文字が入らないようにして bookmarkValues.length ? ... 的な感じにする
+        <ul className={styles.autoCompleteList}>
+          {bookmarkValues.map((v, i) => {
+            if (!v) {
+              return;
+            }
 
-          return (
-            <span key={i}>
-              <button onClick={(_e) => setOrg(v)}>{v + " "}</button>
-              <button onClick={(_e) => removeBookmarkOrgs(v)}>x</button>
-            </span>
-          );
-        })}
-      </div>
-      <div>
-        repos:{" "}
-        {bookmarkRepos.map((v, i) => {
-          if (!v) {
-            return;
-          }
-
-          return (
-            <span key={i}>
-              <button onClick={(_e) => setRepo(v)}>{v + " "}</button>
-              <button onClick={(_e) => removeBookmarkRepos(v)}>x</button>
-            </span>
-          );
-        })}
-      </div>
+            return (
+              <li key={i} className={styles.autoCompleteListItem}>
+                <div
+                  className={styles.autoCompleteWord}
+                  onClick={(_e) => {
+                    setValue(v);
+                    toggleBookmark(false);
+                  }}
+                >
+                  {v}
+                </div>
+                <button
+                  className={styles.autoCompleteItemDeleteButton}
+                  onClick={(_e) => removeBookmarkValues(v)}
+                >
+                  ✖️
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      ) : null}
     </div>
   );
 };

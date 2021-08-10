@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { saveToStorage } from "./storage";
 import { useTextField, useBookmarks } from "./hooks";
 import { truncateCharsFrom } from "./utils";
@@ -12,6 +12,11 @@ import {
 } from "./components";
 
 export const App = () => {
+  const [orgBookmarkOpen, toggleOrgBookmark] = useState(false);
+  const [repoBookmarkOpen, toggleRepoBookmark] = useState(false);
+  const [startBookmarkOpen, toggleStartBookmark] = useState(false);
+  const [endBookmarkOpen, toggleEndBookmark] = useState(false);
+
   const {
     bookmarks: bookmarkOrgs,
     addBookmarks: addBookmarkOrgs,
@@ -22,6 +27,16 @@ export const App = () => {
     addBookmarks: addBookmarkRepos,
     removeBookmarks: removeBookmarkRepos,
   } = useBookmarks("bookmarkRepos");
+  const {
+    bookmarks: bookmarkStarts,
+    addBookmarks: addBookmarkStarts,
+    removeBookmarks: removeBookmarkStarts,
+  } = useBookmarks("bookmarkStarts");
+  const {
+    bookmarks: bookmarkEnds,
+    addBookmarks: addBookmarkEnds,
+    removeBookmarks: removeBookmarkEnds,
+  } = useBookmarks("bookmarkEnds");
 
   const [orgTextField, setOrg] = useTextField({
     placeholder: "org",
@@ -31,11 +46,11 @@ export const App = () => {
     placeholder: "repo",
     key: "repo",
   });
-  const [startTextField] = useTextField({
+  const [startTextField, setStart] = useTextField({
     placeholder: "start",
     key: "start",
   });
-  const [endTextField] = useTextField({
+  const [endTextField, setEnd] = useTextField({
     placeholder: "end",
     key: "end",
   });
@@ -51,7 +66,44 @@ export const App = () => {
     saveToStorage("repo", repoTextField.value);
     saveToStorage("start", startTextField.value);
     saveToStorage("end", endTextField.value);
+    addBookmarkOrgs(orgTextField.value);
+    addBookmarkRepos(repoTextField.value);
+    addBookmarkStarts(startTextField.value);
+    addBookmarkEnds(endTextField.value);
   };
+
+  const orgBookmarkComponent = (
+    <Bookmark
+      bookmarkValues={bookmarkOrgs}
+      setValue={setOrg}
+      removeBookmarkValues={removeBookmarkOrgs}
+      toggleBookmark={toggleOrgBookmark}
+    />
+  );
+  const repoBookmarkComponent = (
+    <Bookmark
+      bookmarkValues={bookmarkRepos}
+      setValue={setRepo}
+      removeBookmarkValues={removeBookmarkRepos}
+      toggleBookmark={toggleRepoBookmark}
+    />
+  );
+  const startBookmarkComponent = (
+    <Bookmark
+      bookmarkValues={bookmarkStarts}
+      setValue={setStart}
+      removeBookmarkValues={removeBookmarkStarts}
+      toggleBookmark={toggleStartBookmark}
+    />
+  );
+  const endBookmarkComponent = (
+    <Bookmark
+      bookmarkValues={bookmarkEnds}
+      setValue={setEnd}
+      removeBookmarkValues={removeBookmarkEnds}
+      toggleBookmark={toggleEndBookmark}
+    />
+  );
 
   return (
     <div>
@@ -62,19 +114,21 @@ export const App = () => {
           repoTextField={repoTextField}
           startTextField={startTextField}
           endTextField={endTextField}
-          addBookmarkOrgs={addBookmarkOrgs}
-          addBookmarkRepos={addBookmarkRepos}
+          orgBookmarkComponent={orgBookmarkComponent}
+          orgBookmarkOpen={orgBookmarkOpen}
+          toggleOrgBookmark={toggleOrgBookmark}
+          repoBookmarkComponent={repoBookmarkComponent}
+          repoBookmarkOpen={repoBookmarkOpen}
+          toggleRepoBookmark={toggleRepoBookmark}
+          startBookmarkComponent={startBookmarkComponent}
+          startBookmarkOpen={startBookmarkOpen}
+          toggleStartBookmark={toggleStartBookmark}
+          endBookmarkComponent={endBookmarkComponent}
+          endBookmarkOpen={endBookmarkOpen}
+          toggleEndBookmark={toggleEndBookmark}
         />
         <SaveButton onSaveClick={onSaveClick} />
         <CompareUrl compareUrl={compareUrl} />
-        <Bookmark
-          bookmarkOrgs={bookmarkOrgs}
-          bookmarkRepos={bookmarkRepos}
-          setOrg={setOrg}
-          setRepo={setRepo}
-          removeBookmarkOrgs={removeBookmarkOrgs}
-          removeBookmarkRepos={removeBookmarkRepos}
-        />
       </Layout>
     </div>
   );

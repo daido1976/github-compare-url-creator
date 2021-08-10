@@ -1,9 +1,12 @@
+.inputFormWrapper {
+  margin-bottom: 1.2em;
+}
+
 .inputForm {
   font-size: 100%;
   line-height: 1.2em;
   width: 300px;
   padding: 0.75em 1em;
-  margin-bottom: 1.2em;
   border: 1px solid rgba(34, 36, 38, 0.15);
   border-radius: 0.5em;
   outline: none;
@@ -11,4 +14,22 @@
 
 .inputForm::placeholder {
   color: #bccde5;
+}
+
+.autoComplete {
+  font-size: 100%;
+  line-height: 1.2em;
+  width: 300px;
+  padding: 0.75em 1em;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  border-radius: 0.5em;
+  outline: none;
+}
+
+.autoCompleteItem {
+  cursor: pointer;
+}
+
+.autoCompleteItem:hover {
+  background-color: #dcdfe4;
 }

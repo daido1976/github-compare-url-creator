@@ -4,7 +4,9 @@ export type StorageKey =
   | "start"
   | "end"
   | "bookmarkOrgs"
-  | "bookmarkRepos";
+  | "bookmarkRepos"
+  | "bookmarkStarts"
+  | "bookmarkEnds";
 
 export const saveToStorage = (key: StorageKey, value: string) => {
   localStorage.setItem(key, value);
