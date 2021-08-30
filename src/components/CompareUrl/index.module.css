@@ -1,0 +1,11 @@
+.octocatLogo {
+  margin-right: 1px;
+  width: 28px;
+  vertical-align: sub;
+}
+
+.compareUrl {
+  text-decoration: none;
+  color: #3e82be;
+  font-weight: bold;
+}
