@@ -23,11 +23,5 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  }
 }
