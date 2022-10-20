@@ -1,3 +1,3 @@
 export const truncateCharsFrom = (text: string) => {
-  return text.substr(0, 10);
+  return text.substring(0, 10);
 };
