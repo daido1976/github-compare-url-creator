@@ -1,5 +1,9 @@
 import styles from "./index.module.css";
 
-export const Layout: React.FC = ({ children }) => {
+type Props = {
+  children: React.ReactNode;
+};
+
+export const Layout: React.FC<Props> = ({ children }) => {
   return <div className={styles.container}>{children}</div>;
 };
