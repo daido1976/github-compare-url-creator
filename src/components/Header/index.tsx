@@ -1,21 +1,13 @@
 import styles from "./index.module.css";
 import githubLogo from "../../img/github.png";
+import { GithubCorner } from "../GithubCorner";
 
 export const Header: React.FC = () => {
   return (
     <div>
+      <GithubCorner url="https://github.com/daido1976/github-compare-url-creator" />
       <h2 className={styles.title}>
-        <a
-          href="https://github.com/daido1976/github-compare-url-creator"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img
-            className={styles.githubLogo}
-            src={githubLogo}
-            alt="github-logo"
-          />
-        </a>
+        <img className={styles.githubLogo} src={githubLogo} alt="github-logo" />
         GitHub Compare URL Creator
       </h2>
     </div>
